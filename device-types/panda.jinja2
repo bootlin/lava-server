@@ -1,0 +1,17 @@
+{% extends 'base-uboot.jinja2' %}
+
+{% set console_device = console_device|default('ttyO2') %}
+{% set baud_rate = baud_rate|default(115200) %}
+{% set device_type = "panda" %}
+{% set extra_kernel_args = "fixrtc nocompcache vram=48M omapfb.vram=0:24M mem=456M@0x80000000 mem=512M@0xA0000000" %}
+{% set bootloader_prompt = bootloader_prompt|default('U-Boot') %}
+{% set bootm_kernel_addr = '0x80200000' %}
+{% set bootm_ramdisk_addr = '0x81600000' %}
+{% set bootm_dtb_addr = '0x815f0000' %}
+{% set bootz_kernel_addr = '0x81000000' %}
+{% set bootz_ramdisk_addr = '0x82000000' %}
+{% set bootz_dtb_addr = '0x81f00000' %}
+{% set boot_message = boot_message|default('Linux version') %}
+{% set uboot_needs_usb = true %}
+{% set action_timeout_u_boot_commands = 2 %}
+{% set uboot_mkimage_arch = 'arm' %}

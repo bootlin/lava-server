@@ -1,0 +1,40 @@
+{% extends 'base.jinja2' %}
+{% set boot_character_delay = 10 %}
+{% block body %}
+device_type: hi6220-hikey
+adb_serial_number: {{ adb_serial_number|default('0000000000') }}
+fastboot_serial_number: {{ fastboot_serial_number|default('0000000000') }}
+{% block vland %}
+{#  #}
+{% endblock %}
+
+actions:
+  deploy:
+    methods:
+      lxc:
+      fastboot:
+    connections:
+      lxc:
+      serial:
+  boot:
+    connections:
+      lxc:
+      serial:
+    methods:
+      uefi-menu:
+        parameters:
+          interrupt_prompt: {{ interrupt_prompt|default("Android Fastboot mode") }}
+          interrupt_string: {{ interrupt_string|default("'x'") }}
+          item_markup:
+            - "["
+            - "]"
+          item_class: '0-9'
+          separator: ' '
+          bootloader_prompt: "{{ bootloader_prompt|default('Start:') }}"
+          boot_message: {{ boot_message|default("Booting Linux Kernel...") }}
+        fastboot:
+        - select:
+            items:
+             - {{ fastboot_select_item|default('boot from eMMC') }}
+
+{% endblock %} {# end body block #}

@@ -1,0 +1,14 @@
+{% extends 'base-uboot.jinja2' %}
+
+{% set console_device = console_device|default('ttyS0') %}
+{% set baud_rate = baud_rate|default(115200) %}
+{% set device_type = "mustang" %}
+{% set extra_kernel_args = "earlycon=uart8250-32bit,0x1c020000 panic=1 debug" %}
+{% set bootloader_prompt = bootloader_prompt|default('Mustang') %}
+{% set bootm_kernel_addr = '0x4002000000' %}
+{% set bootm_ramdisk_addr = '0x4004000000' %}
+{% set bootm_dtb_addr = '0x4003000000' %}
+{% set boot_message = 'Starting kernel' %}
+{% set text_offset = '0x80000' %}
+{% set base_high_limits = false %}
+{% set uboot_mkimage_arch = 'arm' %}

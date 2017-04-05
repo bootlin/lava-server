@@ -1,0 +1,175 @@
+{# Base Kernel options #}
+{% set base_kernel_args = '' %}
+{% set base_extra_nfsroot_args = extra_nfsroot_args | default('') %}
+
+{% set base_nfsroot_args = ("nfsroot={NFS_SERVER_IP}:{NFSROOTFS},tcp,hard,intr" + base_extra_nfsroot_args) -%}
+{% set base_ip_args = base_ip_args|default("ip=dhcp") %}
+{# these options are used by both ssh and scp! #}
+{# check the manpages *carefully* & ensure compatibility! #}
+{# Do not specify port or login (-p/-P or -l) here as this is now handled in the codebase. #}
+{% set ssh_options = (
+"          - '-o'
+          - 'Compression=yes'
+          - '-o'
+          - 'PasswordAuthentication=no'
+          - '-o'
+          - 'LogLevel=FATAL'
+"
+) -%}
+
+{% set ssh_user = 'root' -%}
+
+{# The code will create the correct port arguments for SCP and SSH, as they are different #}
+{% set ssh_port = '22' -%}
+
+{# This is no longer a requirement, to support devices that allow login without authentication #}
+{% set ssh_identity_file = 'device/dynamic_vm_keys/lava' -%}
+
+{% set schroot_options = (
+"          - 'schroot'
+          - '-d'
+          - '/'
+          - '-u'
+          - 'root'"
+) -%}
+
+{# UEFI menu support #}
+{% set base_menu_interrupt_prompt = 'The default boot selection will start in' -%}
+{% set base_menu_interrupt_string = ' ' -%}
+{% set base_item_markup_list = (
+'            - "["
+            - "]"'
+) -%}
+{% set base_item_class = '0-9' -%}
+{% set base_item_separator = ' ' -%}
+{% set base_label_class = 'a-zA-Z0-9\s\:' -%}
+{% set base_menu_bootloader_prompt = 'Start:' -%}
+{% set base_menu_boot_message = "Loaded: LinuxImage" -%}
+{% set base_menu_dictionary = {} -%}
+
+{% block character_delays %}
+{% if boot_character_delay or test_character_delay %}
+character_delays:
+{% if boot_character_delay %}
+      boot: {{ boot_character_delay }}
+{% endif -%}
+{% if test_character_delay %}
+      test: {{ test_character_delay }}
+{% endif -%}
+{% endif -%}
+{% endblock -%}
+
+{% block commands %}
+{% if connection_command %}
+commands:
+    connect: {{ connection_command }}
+{% if hard_reset_command %}
+    hard_reset: {{ hard_reset_command }}
+{% endif -%}
+{% if soft_reset_command %}
+    soft_reset: {{ soft_reset_command }}
+{% endif -%}
+{% if soft_reboot_command %}
+    soft_reboot: {{ soft_reboot_command }}
+{% endif -%}
+{% if power_off_command %}
+    power_off: {{ power_off_command }}
+{% endif %}
+{% if power_on_command %}
+    power_on: {{ power_on_command }}
+{% endif %}
+{% if pre_power_command %}
+    pre_power_command: {{ pre_power_command }}
+{% endif -%}
+{% if pre_os_command %}
+    pre_os_command: {{ pre_os_command }}
+{% endif -%}
+{% endif %}
+{% endblock -%}
+
+{% if device_info %}
+{# LXC support for adding energy probes, usb devices etc. #}
+{# admins need to ensure that the device dictionary sets this as a list of dictionaries, where each dictionary value can contain keys such as 'board_id', 'usb_vendor_id', 'usb_product_id'  #}
+device_info: {{ device_info }}
+{% endif -%}
+
+{% block fastboot %}
+{% if fastboot_serial_number %}
+flash_cmds_order: {{ flash_cmds_order|default(['update', 'ptable',
+                     'partition', 'hyp', 'modem', 'rpm', 'sbl1', 'sbl2',
+                     'sec', 'tz', 'aboot', 'boot', 'rootfs', 'vendor',
+                     'system', 'cache', 'userdata']) }}
+{% endif -%}
+{% endblock -%}
+
+{% block vland %}
+parameters:
+{% if interfaces %}
+  interfaces:
+{% for interface in interfaces %}
+   {{ interface }}:
+     sysfs: "{{ sysfs.get(interface) }}"
+     mac: "{{ mac_addr.get(interface) }}"
+{% for switch, port in map.get(interface).items() %}
+     switch: "{{ switch }}"
+     port: {{ port }}
+{% endfor %}
+     tags:
+{% if tags.get(interface) %}
+{% for tag in tags.get(interface) %}
+     - {{ tag }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
+  pass:
+{% endif %}
+{% endblock -%}
+
+{% block body %}{% endblock -%}
+
+{% block timeouts %}
+timeouts:
+  actions:
+    apply-overlay-image:
+      minutes: {{ action_timeout_apply_overlay_image | default(2) }}
+    dd-image:
+      minutes: {{ action_timeout_dd_image | default(10) }}
+    download_retry:
+      minutes: {{ action_timeout_download_retry | default(5) }}
+    http_download:
+      minutes: {{ action_timeout_http_download | default(5) }}
+    lava-test-shell:
+      minutes: {{ action_timeout_lava_test_shell | default(3) }}
+    nfs-deploy:
+      minutes: {{ action_timeout_nfs_deploy | default(10) }}
+    power_off:
+      seconds: {{ action_timeout_power_off | default(5) }}
+    bootloader-commands:
+      minutes: {{ action_timeout_bootloader_commands | default(3) }}
+    bootloader-interrupt:
+      seconds: {{ action_timeout_bootloader_interrupt | default(30) }}
+    umount-retry:
+      seconds: {{ action_timeout_umount_retry | default(45) }}
+    auto-login-action:
+      minutes: {{ action_timeout_auto_login | default(2) }}
+    bootloader-action:
+      minutes: {{ action_timeout_bootloader_action | default(3)}}
+    uboot-action:
+      minutes: {{ action_timeout_uboot_action | default(3)}}
+    uboot-retry:
+      minutes: {{ action_timeout_uboot_retry | default(3)}}
+    bootloader-retry:
+      minutes: {{ action_timeout_bootloader_retry | default(3)}}
+  connections:
+    dd-image:
+      minutes: {{ connection_timeout_dd_image | default(10) }}
+    uboot-retry:
+      seconds: {{ connection_timeout_uboot_retry | default(30) }}
+    bootloader-commands:
+      seconds: {{ connection_timeout_bootloader_commands | default(30) }}
+    auto-login-action:
+      minutes: {{ connection_timeout_auto_login | default(2) }}
+    bootloader-interrupt:
+      seconds: {{ connection_timeout_bootloader_interrupt | default(30) }}
+{% endblock -%}
