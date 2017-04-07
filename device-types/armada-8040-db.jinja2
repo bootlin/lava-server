@@ -11,7 +11,4 @@
 {% set bootz_dtb_addr = '0x04f00000' %}
 {% set base_ip_args = 'ip=dhcp' %}
 {% set uboot_mkimage_arch = 'arm64' %}
-{% set base_uboot_tftp_bootcmd = (
-"          - setenv bootcmd 'setenv ipaddr 192.168.2.212; setenv serverip {SERVER_IP}; run loadkernel; run loadinitrd; run loadfdt; {BOOTX}'
-          - boot") -%}
-
+{% set uboot_bootx_cmd_2 = "booti ${kernel_addr_r} ${initrd_addr_r} ${fdt_addr_r}" %}
