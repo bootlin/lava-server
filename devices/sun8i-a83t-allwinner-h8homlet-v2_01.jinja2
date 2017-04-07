@@ -1,0 +1,5 @@
+{% extends 'sun8i-a83t-allwinner-h8homlet-v2.jinja2' %}
+{% set connection_command = 'telnet localhost 6041' %}
+{% set power_off_command = 'pduclient --daemon localhost --hostname drawer4 --command off --port 01 --delay 2' %}
+{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer4 --command reboot --port 01 --delay 2' %}
+{% set power_on_command = 'pduclient --daemon localhost --hostname drawer4 --command on --port 01 --delay 2' %}
