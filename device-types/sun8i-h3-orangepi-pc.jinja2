@@ -1,57 +1,10 @@
-{% extends 'base.jinja2' %}
-{% block body %}
-device_type: sun8i-h3-orangepi-pc
-
-{% set console_device = console_device | default('ttyS0') %}
-{% set baud_rate = baud_rate | default(115200) %}
-
-{# allow job context override - use a different variable name, undefined if not in job context #}
-{% set base_nfsroot_args = nfsroot_args | default(base_nfsroot_args) -%}
-{% set base_kernel_args = extra_kernel_args | default(base_kernel_args) %}
-
-{# adds the parameters: top level block #}
-{% block vland %}
-{{ super() }}
-{% endblock %}
-  bootz:
-   kernel: '{{ bootz_kernel_addr|default('0x42000000') }}'
-   ramdisk: '{{ bootz_ramdisk_addr|default('0x43300000') }}'
-   dtb: '{{ bootz_dtb_addr|default('0x43000000') }}'
-
-actions:
-  deploy:
-    parameters:
-      add_header: u-boot
-      mkimage_arch: {{ uboot_mkimage_arch|default('arm') }} # string to pass to mkimage -A when adding UBoot headers
-    methods:
-      tftp:
-      usb:
-  boot:
-    connections:
-      serial:
-      ssh:
-    methods:
-      u-boot:
-        parameters:
-          bootloader_prompt: {{ bootloader_prompt|default('=>') }}
-          boot_message: {{ boot_message|default('Booting Linux') }}
-          send_char: False
-          # interrupt: # character needed to interrupt u-boot, single whitespace by default
-          # method specific stanza
-        nfs:
-          commands:
-{{ base_uboot_commands }}
-{{ base_uboot_addr_commands }}
-{{ base_tftp_commands }}
-          # Always quote the entire string if the command includes a colon to support correct YAML.
-          - "setenv nfsargs 'setenv bootargs console={{ console_device }},{{ baud_rate }}n8 root=/dev/nfs rw
-            {{ base_nfsroot_args }} {{ base_kernel_args }} ip=dhcp'"
-{{ base_nfs_uboot_bootcmd }}
-        ramdisk:
-          commands:
-{{ base_uboot_commands }}
-{{ base_uboot_addr_commands }}
-{{ base_tftp_commands }}
-          - setenv bootargs 'console={{ console_device }},{{ baud_rate }}n8 root=/dev/ram0 {{ base_kernel_args }} ip=dhcp'
-{{ base_tftp_uboot_bootcmd }}
-{% endblock %}
+{% extends 'base-uboot.jinja2' %}
+{% set console_device = console_device|default('ttyS0') %}
+{% set baud_rate = baud_rate|default(115200) %}
+{% set device_type = "sun8i-h3-orangepi-pc" %}
+{% set bootloader_prompt = bootloader_prompt|default('=>') %}
+{% set bootz_kernel_addr = '0x42000000' %}
+{% set bootz_ramdisk_addr = '0x43300000' %}
+{% set bootz_dtb_addr = '0x43000000' %}
+{% set base_ip_args = 'ip=dhcp' %}
+{% set uboot_mkimage_arch = 'arm' %}
