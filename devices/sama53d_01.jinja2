@@ -1,4 +1,4 @@
-{% extends 'at91-sama5d3_xplained.jinja2' %}
+{% extends 'sama53d.jinja2' %}
 {% set connection_command = 'telnet localhost 6062' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer6 --command off --port 02 --delay 2' %}
 {% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer6 --command reboot --port 02 --delay 2' %}
