@@ -1,0 +1,5 @@
+{% extends 'armada-xp-db.jinja2' %}
+{% set connection_command = 'telnet localhost 6022' %}
+{% set power_off_command = 'pduclient --daemon localhost --hostname drawer2 --command off --port 02 --delay 2' %}
+{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer2 --command reboot --port 02 --delay 2' %}
+{% set power_on_command = 'pduclient --daemon localhost --hostname drawer2 --command on --port 02 --delay 2' %}
