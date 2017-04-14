@@ -1,0 +1,5 @@
+{% extends 'kirkwood-db-88f6282.jinja2' %}
+{% set connection_command = 'telnet localhost 6024' %}
+{% set power_off_command = 'pduclient --daemon localhost --hostname drawer2 --command off --port 04 --delay 2' %}
+{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer2 --command reboot --port 04 --delay 2' %}
+{% set power_on_command = 'pduclient --daemon localhost --hostname drawer2 --command on --port 04 --delay 2' %}
