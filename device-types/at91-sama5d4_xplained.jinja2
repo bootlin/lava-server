@@ -3,9 +3,9 @@
 {% set baud_rate = baud_rate|default(115200) %}
 {% set device_type = "at91-sama5d4_xplained" %}
 {% set bootloader_prompt = bootloader_prompt|default('=>') %}
-{% set bootu_kernel_addr = '0x20008000' %}
-{% set bootu_ramdisk_addr = '0x21100000' %}
-{% set bootu_dtb_addr = '0x21000000' %}
+{% set bootm_kernel_addr = '0x20008000' %}
+{% set bootm_ramdisk_addr = '0x21100000' %}
+{% set bootm_dtb_addr = '0x21000000' %}
 {% set bootz_kernel_addr = '0x20000000' %}
 {% set bootz_ramdisk_addr = '0x22000000' %}
 {% set bootz_dtb_addr = '0x21f00000' %}

@@ -4,4 +4,4 @@
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer1 --command off --port 01 --delay 4' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer1 --command on --port 01 --delay 4' %}
 {% set uboot_ipaddr_cmd = "setenv ipaddr 192.168.2.212" %}
-{% set uboot_bootx_cmd = "fdt addr ${fdt_addr_r}; fdt resize; fdt set /cp110-master/config-space@f2000000/sata@540000 status disabled; fdt set /cp110-slave/config-space@f4000000/sata@540000 status disabled; fdt set /cp110-master/config-space@f2000000/trng@760000 status disabled; fdt set /cp110-slave/config-space@f4000000/trng@760000 status disabled; booti ${kernel_addr_r} ${initrd_addr_r} ${fdt_addr_r}" %}
+{% set uboot_bootx_cmd = "fdt addr ${fdt_addr_r}; fdt resize; fdt set /cp110-master/config-space@f2000000/sata@540000 status disabled; fdt set /cp110-slave/config-space@f4000000/sata@540000 status disabled; fdt set /cp110-master/config-space@f2000000/trng@760000 status disabled; fdt set /cp110-slave/config-space@f4000000/trng@760000 status disabled; {BOOTX}" %}
