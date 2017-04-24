@@ -29,10 +29,6 @@
 
 {% set uboot_needs_usb = uboot_needs_usb|default(false) %}
 
-{% set append_dtb = append_dtb|default(false) %}
-
-{% set use_xip = use_xip|default(false) %}
-
 {% set usb_uuid = usb_uuid|default('') %}
 {% set usb_device_id = usb_device_id|default(0) %}
 
@@ -111,12 +107,8 @@ actions:
     parameters:
       add_header: u-boot
       mkimage_arch: {{ uboot_mkimage_arch|default('arm64') }} # string to pass to mkimage -A when adding UBoot headers
-{% if append_dtb %}
-      append_dtb:
-{% endif %}
-{% if use_xip %}
-      use_xip:
-{% endif %}
+      append_dtb: {{ append_dtb|default(false) }}
+      use_xip: {{ use_xip|default(false) }}
     connections:
       lxc:
       serial:
