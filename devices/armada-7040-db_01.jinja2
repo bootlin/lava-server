@@ -1,0 +1,7 @@
+{% extends 'armada-7040-db.jinja2' %}
+{% set connection_command = 'telnet localhost 6033' %}
+{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer3 --command reboot --port 03 --delay 4' %}
+{% set power_off_command = 'pduclient --daemon localhost --hostname drawer3 --command off --port 03 --delay 4' %}
+{% set power_on_command = 'pduclient --daemon localhost --hostname drawer3 --command on --port 03 --delay 4' %}
+{% set uboot_ipaddr_cmd = "setenv ipaddr 192.168.2.201" %}
+{% set uboot_bootx_cmd = "fdt addr {DTB_ADDR}; fdt resize; fdt set /cp110-master/config-space@f2000000/sata@540000 status disabled; fdt set /cp110-master/config-space@f2000000/trng@760000 status disabled; {BOOTX}" %}
