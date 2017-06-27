@@ -6,12 +6,6 @@ device_type: d03
 {% set baud_rate = baud_rate | default(115200) %}
 {% set grub_installed_device = grub_installed_device | default('(hd1,gpt1)') %}
 
-{% block character_delays %}
-{% endblock %}
-
-{% block vland %}
-{% endblock %}
-
 actions:
   deploy:
     connections:
@@ -68,7 +62,7 @@ actions:
           - sleep 10
           - boot
 
-{% endblock %}
+{% endblock body %}
 
 {% block timeouts %}
 timeouts:
@@ -87,10 +81,10 @@ timeouts:
       seconds: 600
     installer-wait:
       seconds: 5400
-    pdu_reboot:
+    pdu-reboot:
       seconds: 3000
   connections:
-    pdu_reboot:
+    pdu-reboot:
       seconds: 3000
     grub-main:
        seconds: 5400
@@ -104,4 +98,4 @@ timeouts:
       seconds: 300
     bootloader-commands:
       seconds: 600
-{% endblock %}
+{% endblock timeouts %}

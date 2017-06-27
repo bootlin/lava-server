@@ -1,19 +1,12 @@
 {% extends 'base.jinja2' %}
-{% block body %}
-
-device_type: overdrive
 {% set console_device = console_device | default('ttyAMA0') %}
 {% set baud_rate = baud_rate | default(115200) %}
 
 {% set kernel_args = kernel_args | default('acpi=force r8169.use_dac=1') %}
-{% block character_delays %}
-{{ super() }}
-{% endblock %}
 
-{% block vland %}
-{{ super() }}
-{% endblock %}
+{% block body %}
 
+device_type: overdrive
 actions:
   deploy:
     connections:
@@ -25,10 +18,8 @@ actions:
       ssh:
         options:
 {{ ssh_options }}
-{% if ssh_host %}
-        host: {{ ssh_host }}
-{% endif %}
-        user: {{ ssh_user|default(root) }}
+        host: '{{ ssh_host|default('') }}'
+        user: {{ ssh_user|default('root') }}
         port: {{ ssh_port|default(22) }}
         identity_file: {{ ssh_identity_file }}
   boot:
@@ -68,7 +59,7 @@ actions:
           - initrd (tftp)/{RAMDISK}
           - devicetree (tftp)/{DTB}
           - boot
-{% endblock %}
+{% endblock body %}
 
 {% block timeouts %}
 timeouts:
@@ -85,10 +76,10 @@ timeouts:
       seconds: 600
     auto-login-action:
       seconds: 600
-    pdu_reboot:
+    pdu-reboot:
       seconds: 3000
   connections:
-    pdu_reboot:
+    pdu-reboot:
       seconds: 3000
     grub-main:
        seconds: 5400
@@ -100,4 +91,4 @@ timeouts:
       seconds: 300
     bootloader-commands:
       seconds: 600
-{% endblock %}
+{% endblock timeouts %}
