@@ -1,6 +1,6 @@
 {% extends 'armada-3720-espressobin.jinja2' %}
 {% set connection_command = 'telnet localhost 6046' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer4 --command off --port 06 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer4 --command reboot --port 06 --delay 2' %}
+{% set hard_reset_command = 'echo reboot' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer4 --command on --port 06 --delay 2' %}
 {% set uboot_ipaddr_cmd = 'setenv ipaddr 192.168.2.202' %}

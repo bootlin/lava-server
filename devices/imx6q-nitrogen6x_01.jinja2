@@ -1,5 +1,5 @@
 {% extends 'imx6q-nitrogen6x.jinja2' %}
 {% set connection_command = 'telnet localhost 6064' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer6 --command off --port 04 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer6 --command reboot --port 04 --delay 2' %}
+{% set hard_reset_command = 'echo reboot' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer6 --command on --port 04 --delay 2' %}
