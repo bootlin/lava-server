@@ -1,0 +1,5 @@
+{% extends 'beaglebone-black.jinja2' %}
+{% set power_off_command = '/usr/bin/pduclient --daemon localhost --hostname drawer6 --command off --port 01 --delay 2' %}
+{% set hard_reset_command = '/usr/bin/pduclient --daemon localhost --hostname drawer6 --command reboot --port 01 --delay 2' %}
+{% set connection_command = 'telnet localhost 6061' %}
+{% set power_on_command = '/usr/bin/pduclient --daemon localhost --hostname drawer6 --command on --port 01 --delay 2' %}
