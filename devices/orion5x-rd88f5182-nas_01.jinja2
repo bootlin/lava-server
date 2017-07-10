@@ -1,5 +1,5 @@
 {% extends 'orion5x-rd88f5182-nas.jinja2' %}
-{% set connection_command = 'telnet localhost 6087' %}
+{% set connection_command = '/usr/local/connect_forever localhost 6087' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer8 --command off --port 07 --delay 2' %}
 {% set hard_reset_command = 'echo reboot' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer8 --command on --port 07 --delay 2' %}

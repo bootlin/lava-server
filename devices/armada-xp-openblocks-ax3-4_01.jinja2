@@ -1,5 +1,5 @@
 {% extends 'armada-xp-openblocks-ax3-4.jinja2' %}
-{% set connection_command = 'telnet localhost 6068' %}
+{% set connection_command = '/usr/local/connect_forever localhost 6068' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer6 --command off --port 08 --delay 2' %}
 {% set hard_reset_command = 'echo reboot' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer6 --command on --port 08 --delay 2' %}
