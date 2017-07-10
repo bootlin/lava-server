@@ -1,5 +1,5 @@
 {% extends 'armada-385-db-ap.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6088' %}
 {% set power_off_command = 'pduclient --daemon localhost --hostname drawer8 --command off --port 08 --delay 2' %}
-{% set hard_reset_command = 'echo reboot' %}
+{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer8 --command reboot --port 08 --delay 2' %}
 {% set power_on_command = 'pduclient --daemon localhost --hostname drawer8 --command on --port 08 --delay 2' %}
