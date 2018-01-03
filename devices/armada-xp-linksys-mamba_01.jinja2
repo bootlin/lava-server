@@ -1,5 +1,6 @@
 {% extends 'armada-xp-linksys-mamba.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6048' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer4 --command off --port 08 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer4 --command reboot --port 08 --delay 2' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer4 --command on --port 08 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer4 8 off' %}
+{% set power_on_command = '/opt/relay.py drawer4 8 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer4 8 reset' %}
+{% set boot_message = 'Starting kernel' %}

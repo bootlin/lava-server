@@ -1,6 +1,6 @@
 {% extends 'armada-375-db.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6084' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer8 --command off --port 04 --delay 5' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer8 --command reboot --port 04 --delay 5' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer8 --command on --port 04 --delay 5' %}
-{% set interrupt_prompt = "Marvell>>" %}
+{% set power_off_command = '/opt/relay.py drawer8 4 off' %}
+{% set power_on_command = '/opt/relay.py drawer8 4 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer8 4 reset' %}
+{% set boot_message = 'Starting kernel' %}

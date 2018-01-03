@@ -1,5 +1,6 @@
 {% extends 'armada-370-db.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6032' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer3 --command off --port 02 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer3 --command reboot --port 02 --delay 2' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer3 --command on --port 02 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer3 2 off' %}
+{% set power_on_command = '/opt/relay.py drawer3 2 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer3 2 reset' %}
+{% set boot_message = 'Starting kernel' %}

@@ -1,5 +1,6 @@
 {% extends 'kirkwood-db-88f6282.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6024' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer2 --command off --port 04 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer2 --command reboot --port 04 --delay 2' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer2 --command on --port 04 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer2 4 off' %}
+{% set power_on_command = '/opt/relay.py drawer2 4 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer2 4 reset' %}
+{% set boot_message = 'Starting kernel' %}

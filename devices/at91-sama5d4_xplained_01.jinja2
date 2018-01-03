@@ -1,5 +1,6 @@
 {% extends 'at91-sama5d4_xplained.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6081' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer8 --command off --port 01 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer8 --command reboot --port 01 --delay 2' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer8 --command on --port 01 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer8 1 off' %}
+{% set power_on_command = '/opt/relay.py drawer8 1 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer8 1 reset' %}
+{% set boot_message = 'Starting kernel' %}

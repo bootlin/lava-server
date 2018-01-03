@@ -1,5 +1,6 @@
 {% extends 'sun8i-a23-evb.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6044' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer4 --command on --port 04 --delay 2' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer4 --command off --port 04 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer4 --command reboot --port 04 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer4 4 off' %}
+{% set power_on_command = '/opt/relay.py drawer4 4 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer4 4 reset' %}
+{% set boot_message = 'Starting kernel' %}

@@ -1,5 +1,6 @@
 {% extends 'sun6i-a31-app4-evb1.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6045' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer4 --command on --port 05 --delay 2' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer4 --command off --port 05 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer4 --command reboot --port 05 --delay 2' %}
+{% set power_off_command = '/opt/relay.py drawer4 5 off' %}
+{% set power_on_command = '/opt/relay.py drawer4 5 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer4 5 reset' %}
+{% set boot_message = 'Starting kernel' %}

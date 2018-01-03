@@ -1,6 +1,7 @@
 {% extends 'orion5x-rd88f5182-nas.jinja2' %}
 {% set connection_command = '/usr/local/connect_forever localhost 6087' %}
-{% set power_off_command = 'pduclient --daemon localhost --hostname drawer8 --command off --port 07 --delay 2' %}
-{% set hard_reset_command = 'pduclient --daemon localhost --hostname drawer8 --command reboot --port 07 --delay 2' %}
-{% set power_on_command = 'pduclient --daemon localhost --hostname drawer8 --command on --port 07 --delay 2' %}
 {% set uboot_ipaddr_cmd = "setenv ipaddr 192.168.2.213" %}
+{% set power_off_command = '/opt/relay.py drawer8 7 off' %}
+{% set power_on_command = '/opt/relay.py drawer8 7 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer8 7 reset' %}
+{% set boot_message = 'Starting kernel' %}
