@@ -1,0 +1,26 @@
+{% extends 'base.jinja2' %}
+
+{% block body %}
+device_type: docker
+
+actions:
+  deploy:
+    methods:
+      docker:
+  boot:
+    connections:
+      serial:
+    methods:
+      docker:
+        options:
+          cpus: {{ docker_cpus|default(0.0) }}
+          memory: {{ docker_memory|default(0) }}
+{% if docker_volumes|default([]) %}
+          volumes:
+{% for volume in docker_volumes %}
+            - {{ volume }}
+{% endfor %}
+{% else %}
+          volumes: []
+{% endif %}
+{% endblock body %}
