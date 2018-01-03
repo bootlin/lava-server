@@ -1,5 +1,5 @@
 {% extends 'base-uboot.jinja2' %}
-{% set console_device = console_device|default('ttyAT0') %}
+{% set console_device = console_device|default('ttyAT0,115200 console=ttyS0') %}
 {% set baud_rate = baud_rate|default(115200) %}
 {% set device_type = "sama5d36ek" %}
 {% set bootloader_prompt = bootloader_prompt|default('=>') %}
