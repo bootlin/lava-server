@@ -9,3 +9,18 @@
 {% set base_ip_args = 'ip=dhcp' %}
 {% set uboot_mkimage_arch = 'arm' %}
 {% set uboot_needs_usb = true %}
+{% set uboot_tftp_commands = ("          - setenv loadkernel 'tftp {KERNEL_ADDR} {KERNEL}'
+          - setenv rootfs '{RAMDISK}'
+          - setenv dtb '{DTB}'
+          - setenv loadrfs 'tftp {RAMDISK_ADDR} ${rootfs}'
+          - setenv initrd_size ${filesize}
+          - setenv loadfdt 'tftp {DTB_ADDR} ${dtb}'") -%}
+{# Need to split the long line in many small ones since U-boot breaks the end of
+too long commands.  #}
+{% set uboot_tftp_bootcmd = ("          - usb reset
+          - " + uboot_ipaddr_cmd|default('dhcp') + "
+          - setenv serverip {SERVER_IP}
+          - run loadkernel
+          - run loadrfs
+          - run loadfdt 
+          - \"" + uboot_bootx_cmd|default('{BOOTX}') + "\"") -%}
