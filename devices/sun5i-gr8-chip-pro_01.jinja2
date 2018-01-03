@@ -1,0 +1,6 @@
+{% extends 'sun5i-gr8-chip-pro.jinja2' %}
+{% set connection_command = '/usr/local/connect_forever localhost 6061' %}
+{% set power_off_command = '/opt/relay.py drawer6 1 off' %}
+{% set power_on_command = '/opt/relay.py drawer6 1 on' %}
+{% set hard_reset_command = '/opt/relay.py drawer6 1 reset' %}
+{% set boot_message = 'Starting kernel' %}
