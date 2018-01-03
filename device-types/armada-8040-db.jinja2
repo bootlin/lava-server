@@ -8,3 +8,5 @@
 {% set booti_dtb_addr     = '0x04f00000' %}
 {% set base_ip_args = 'ip=dhcp' %}
 {% set uboot_mkimage_arch = 'arm64' %}
+{# Hack until mainline/next have the fix for CMA pool size #}
+{% set extra_kernel_args = " cma=32M " %}
